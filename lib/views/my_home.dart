@@ -14,19 +14,26 @@ class MyHome extends StatelessWidget {
         title: const Text("API with State Management"),
         backgroundColor: Colors.teal,
       ),
-      body: Obx(
-        () => StaggeredGridView.countBuilder(
-            crossAxisCount: 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            itemCount: productcontroller.productlist.length,
-            itemBuilder: (context, index) {
-              return ProductSktach(productcontroller.productlist[index]);
-            },
-            staggeredTileBuilder: (index) {
-              return StaggeredTile.fit(2);
-            }),
-      ),
+      body: Obx(() {
+        if (productcontroller.loading.value) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.red,
+            ),
+          );
+        } else
+          return StaggeredGridView.countBuilder(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              itemCount: productcontroller.productlist.length,
+              itemBuilder: (context, index) {
+                return ProductSktach(productcontroller.productlist[index]);
+              },
+              staggeredTileBuilder: (index) {
+                return StaggeredTile.fit(1);
+              });
+      }),
     );
   }
 }
